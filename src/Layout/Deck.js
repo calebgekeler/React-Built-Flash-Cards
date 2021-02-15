@@ -24,10 +24,10 @@ function Deck({fnObj, studyDeck}){
       <div className="card w-100">
         <div className="cardbody">
           <p className="text-center">
-             Front: {item.front}
+             {item.front}
           </p>
           <p className="text-center">
-            Back: {item.back}
+            {item.back}
           </p>
         </div>
         <div className="container p-3">

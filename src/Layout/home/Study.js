@@ -26,9 +26,9 @@ function Study({fnObj, studyDeck, sideToDisplay, counter, isNextBtnOn}){
         <div className="row">
           <div className="card w-100">
             <div className="card-body">
-              <h4 className="card-title pl-20">
+              <h5 className="card-title pl-20">
                 Card {counter+1} of {studyDeck.cards.length}
-              </h4>
+              </h5>
               <p className="card-text">
                 {sideToDisplay}
               </p>

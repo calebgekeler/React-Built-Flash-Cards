@@ -8,7 +8,7 @@ function EditCard({fnObj, studyDeck}){
   //console.log("CARD ID", cardId)
   let allCards=[]
   let [card, setCard] = useState({})
-  console.log("CARD", card)
+  //console.log("CARD", card)
 
   const url = `http://localhost:5000/cards`;
 

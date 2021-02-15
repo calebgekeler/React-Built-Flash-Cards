@@ -1,6 +1,6 @@
 import React, {useState, useEffect, Fragment} from "react";
 import {Switch, Route, useHistory} from "react-router-dom";
-import {listDecks, deleteDeck, updateDeck, createCard, createDeck} from "../utils/api/index";
+import {listDecks, deleteDeck, updateDeck, createCard, createDeck, readDeck} from "../utils/api/index";
 import Header from "./Header";
 import NotFound from "./NotFound";
 import CreateDeckBtn from "./home/CreateDeckBtn";
@@ -87,10 +87,12 @@ function Layout() {
         return
       }
     },
-    studyDeckSetter: (id) => {
-      const item = deck.find((item)=>id==item.id);
-      setStudyDeck(item);
-      //console.log('STUDY DECK', studyDeck);
+    studyDeckSetter: async (id) => {
+      if(id===undefined){id=1}; //sets an arbitrary id value so the function compiles but it is over written when necessary
+      const item = await readDeck(id);
+      const resolved = await Promise.resolve(item);
+      setStudyDeck(resolved);
+      //console.log('STUDY DECK', studyDeck)
     },
     addCardFormChangeHandler: ({target}) => {
       setAddCardData({
