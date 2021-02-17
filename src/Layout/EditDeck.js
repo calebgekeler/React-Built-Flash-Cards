@@ -1,10 +1,13 @@
-import React, {useState} from "react";
-import {Link, useHistory} from "react-router-dom";
-import {updateDeck} from "../utils/api/index"
+import React, {useState, useEffect} from "react";
+import {Link, useHistory, useParams} from "react-router-dom";
+import {updateDeck, readDeck} from "../utils/api/index"
 
-function EditDeck({studyDeck}){
-
-  const [editDeck, setEditDeck] = useState(studyDeck);
+function EditDeck({fnObj}){
+  const {deckId} = useParams()
+  
+  
+  
+  const [editDeck, setEditDeck] = useState({});
   //console.log('EDIT DECK', editDeck);
   const history=useHistory();
 
@@ -18,9 +21,20 @@ function EditDeck({studyDeck}){
   const editDeckSubmitHandler= async (event)=>{
     event.preventDefault();
     await updateDeck(editDeck);
-    history.push(`/decks/${editDeck.id}`)
+    history.push(`/decks/${editDeck.id}`);
   }
 
+  async function getDeck(){
+    const item = await readDeck(deckId)
+    const resolved = await Promise.resolve(item)
+    setEditDeck(resolved);
+    //console.log(editDeck);
+  }
+  
+  useEffect(()=>{
+    getDeck()
+  }, [editDeck.id])
+  
   let result=(
     <section className="container">
       <h2 className="row">Edit Deck</h2>

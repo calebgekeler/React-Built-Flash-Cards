@@ -9,7 +9,14 @@ function CreateDeck({fnObj}){
         <form onSubmit={fnObj.createDeckSubmitHandler}>
           <label className="row">
             <h5>Name:</h5>
-            <textarea
+            {/* <textarea
+              className="w-100"
+              name="name"
+              type="text"
+              placeholder="Name of the deck..."
+              onChange={fnObj.createDeckChangeHandler}
+            /> */}
+            <input
               className="w-100"
               name="name"
               type="text"

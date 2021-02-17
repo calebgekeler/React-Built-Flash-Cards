@@ -21,7 +21,7 @@ function Layout() {
 
   const [deck, setDeck] = useState([]);
   const [studyDeck, setStudyDeck] = useState(undefined);
-  const [sideToDisplay, setDisplay] = useState(undefined);
+  //const [sideToDisplay, setDisplay] = useState(undefined);
   let [counter, setCounter] = useState(0);
   let [isNextBtnOn, setNextBtn] = useState(false);
   //deleteCard(6)
@@ -57,36 +57,36 @@ function Layout() {
       const deckSet = await Promise.resolve(listDecks());
       return setDeck(deckSet);
     },
-    nextHandler: () => {
-      if(counter<studyDeck.cards.length-1){
-        setCounter(counter+=1);
-        setNextBtn(false);
-        setDisplay(studyDeck.cards[counter].front);
-      }
-      else{
-        if(window.confirm("Press OK to restart deck and CANCEL to return home")){
-          setNextBtn(false);
-          setDisplay(studyDeck.cards[counter].front);
-        }
-        else{
-          history.push("/");
-          setNextBtn(false);
-        }
-        setCounter(0);
-      }
-    },
-    flipHandler: () => {
-      if(sideToDisplay===studyDeck.cards[counter].front){
-        setDisplay(studyDeck.cards[counter].back);
-        setNextBtn(true);
-        return   
-      }
-      if(sideToDisplay===studyDeck.cards[counter].back){
-        setDisplay(studyDeck.cards[counter].front);
-        setNextBtn(false);
-        return
-      }
-    },
+    // nextHandler: () => {
+    //   if(counter<studyDeck.cards.length-1){
+    //     setCounter(counter+=1);
+    //     setNextBtn(false);
+    //     setDisplay(studyDeck.cards[counter].front);
+    //   }
+    //   else{
+    //     if(window.confirm("Press OK to restart deck and CANCEL to return home")){
+    //       setNextBtn(false);
+    //       setDisplay(studyDeck.cards[counter].front);
+    //     }
+    //     else{
+    //       history.push("/");
+    //       setNextBtn(false);
+    //     }
+    //     setCounter(0);
+    //   }
+    // },
+    // flipHandler: () => {
+    //   if(sideToDisplay===studyDeck.cards[counter].front){
+    //     setDisplay(studyDeck.cards[counter].back);
+    //     setNextBtn(true);
+    //     return   
+    //   }
+    //   if(sideToDisplay===studyDeck.cards[counter].back){
+    //     setDisplay(studyDeck.cards[counter].front);
+    //     setNextBtn(false);
+    //     return
+    //   }
+    // },
     studyDeckSetter: async (id) => {
       if(id===undefined){id=1}; //sets an arbitrary id value so the function compiles but it is over written when necessary
       const item = await readDeck(id);
@@ -129,14 +129,10 @@ function Layout() {
   }
   useEffect(()=>{
     fnObj.studyDeckSetter(deck[0])
-  }, [])
+  }, [deck.id])
 
   useEffect(()=>{
    fnObj.deckFetcher();
-
-   if(studyDeck!==undefined){
-    setDisplay(studyDeck.cards[counter].front);
-   }
   }, [studyDeck, counter])
   return (
     <Fragment>
@@ -157,14 +153,15 @@ function Layout() {
             <Study 
               fnObj={fnObj} 
               studyDeck={studyDeck}
-              sideToDisplay={sideToDisplay}
               counter={counter}
               isNextBtnOn={isNextBtnOn}
               setCounter={setCounter}
               setNextBtn={setNextBtn}
+              setCounter={setCounter}
+              setNextBtn={setNextBtn}
             />
           </Route>
-          <Route path={"/decks/:deckId/cards/new"}>
+          <Route exact={true} path={"/decks/:deckId/cards/new"}>
             <BreadCrumb 
               studyDeck={studyDeck}
             />
@@ -180,7 +177,6 @@ function Layout() {
             <CreateDeck 
               fnObj={fnObj}
               createDeckData={createDeckData}
-            
             />
           </Route>
           <Route exact={true} path={"/decks/:deckId"}>
@@ -192,15 +188,15 @@ function Layout() {
               fnObj={fnObj}
             />
           </Route>
-          <Route path={"/decks/:deckId/cards/:cardId/edit"}>
+          <Route exact={true} path={"/decks/:deckId/cards/:cardId/edit"}>
             <EditCard 
               studyDeck={studyDeck}
               fnObj={fnObj}
             />
           </Route>
-          <Route path={"/decks/:deckId/edit"}>
+          <Route exact={true} path={"/decks/:deckId/edit"}>
             <BreadCrumb studyDeck={studyDeck}/>
-            <EditDeck studyDeck={studyDeck}/>
+            <EditDeck fnObj={fnObj} studyDeck={studyDeck}/>
           </Route>
           <Route>
             <NotFound />

@@ -2,10 +2,9 @@ import React, {Fragment} from "react";
 import {Link, useHistory, useParams} from "react-router-dom"
 import {updateCard} from "../utils/api/index"
 
-function CardForm({studyDeck, fnObj, card, setCard}){
+function CardForm({fnObj, card, setCard}){
   const history=useHistory();
   const {deckId}=useParams();
-  
 
   
   let result
