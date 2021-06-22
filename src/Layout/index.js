@@ -57,36 +57,6 @@ function Layout() {
       const deckSet = await Promise.resolve(listDecks());
       return setDeck(deckSet);
     },
-    // nextHandler: () => {
-    //   if(counter<studyDeck.cards.length-1){
-    //     setCounter(counter+=1);
-    //     setNextBtn(false);
-    //     setDisplay(studyDeck.cards[counter].front);
-    //   }
-    //   else{
-    //     if(window.confirm("Press OK to restart deck and CANCEL to return home")){
-    //       setNextBtn(false);
-    //       setDisplay(studyDeck.cards[counter].front);
-    //     }
-    //     else{
-    //       history.push("/");
-    //       setNextBtn(false);
-    //     }
-    //     setCounter(0);
-    //   }
-    // },
-    // flipHandler: () => {
-    //   if(sideToDisplay===studyDeck.cards[counter].front){
-    //     setDisplay(studyDeck.cards[counter].back);
-    //     setNextBtn(true);
-    //     return   
-    //   }
-    //   if(sideToDisplay===studyDeck.cards[counter].back){
-    //     setDisplay(studyDeck.cards[counter].front);
-    //     setNextBtn(false);
-    //     return
-    //   }
-    // },
     studyDeckSetter: async (id) => {
       if(id===undefined){id=1}; //sets an arbitrary id value so the function compiles but it is over written when necessary
       const item = await readDeck(id);

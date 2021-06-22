@@ -6,10 +6,7 @@ import {readDeck, readCard} from "../utils/api/index"
 
 function EditCard({fnObj}){
   const{deckId, cardId}=useParams()
-  //console.log("CARD ID", cardId)
-  //let allCards=[]
   let [card, setCard] = useState({})
-  //console.log("CARD", card)
   const [deck, setDeck] = useState({})
 
   const studyDeckSetter = async (id) => {
@@ -20,37 +17,11 @@ function EditCard({fnObj}){
     console.log('DECK', deck)
   }
 
-  //const url = `http://localhost:5000/cards`;
-
-  // async function fetchJson(url, options) {
-  //   try {
-  //     const response = await fetch(url, options);
-  //     if (response.status < 200 || response.status > 399) {
-  //       throw new Error(`${response.status} - ${response.statusText}`);
-  //     }
-  //     return await response.json();
-  //   } catch (error) {
-  //     if (error.name !== "AbortError") {
-  //       throw error;
-  //     }
-  //   }
-  // }
-  
-  //   let response = await fetchJson(url)
-  //   allCards= await Promise.resolve(response)
-  //   //console.log(allCards)
-  //   for(let item in allCards){
-  //     //console.log(allCards[item].id)
-  //     if(allCards[item].id==cardId){setCard(allCards[item])}
-  //   }
-  //   //console.log('CARD', card.front)
-  // }
   async function getCard(id){
     const item = await readCard(id);
     const resolved = await Promise.resolve(item)
     setCard(resolved);
   }
-
 
   useEffect(()=>{
     getCard(cardId);

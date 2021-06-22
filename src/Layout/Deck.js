@@ -3,34 +3,32 @@ import {Link, useParams} from "react-router-dom"
 import {deleteCard, readDeck} from "../utils/api/index"
 
 
-function Deck({fnObj, studyDeck}){
+function Deck({fnObj}){
   const {deckId}=useParams()
   
   let result
 
   let [deck, setDeck] = useState({})
 
-  async function getDeck(){
-    const item = await readDeck(deckId)
-    const resolved = await Promise.resolve(item)
-    //console.log('RESOLVED', resolved)
-    setDeck(resolved);
+  function getDeck(){
+    readDeck(deckId)
+      .then(setDeck);
   }
 
   const deleteCardHandler = async (event) =>{
     event.preventDefault();
     await deleteCard(event.target.id);
-    fnObj.studyDeckSetter(deckId);
+    //fnObj.studyDeckSetter(deckId);
   }
 
   useEffect(()=>{
-    getDeck()
+    getDeck();
   }, [deck.id])
   //console.log("DECK", deck)
   
   
 
-  if(deck.cards !== undefined){
+  if(Array.isArray(deck.cards)){
     const cards = deck.cards.map((item)=>(
       <div className="card w-100">
         <div className="cardbody">
@@ -71,7 +69,9 @@ function Deck({fnObj, studyDeck}){
 
     )
   }
+
   else{return null};
+
   return result;
 }
 
